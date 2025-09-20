@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <xacro:macro
+    name="rover_a1_robot"
+    params="wheel_config_file
+            controller_config_file
+            use_sim:=true
+            namespace:=''">
+
+    <xacro:property name="ns" value='${namespace + "/" if namespace else ""}' />
+
+    <xacro:property name="wheel_config" value="${xacro.load_yaml(wheel_config_file)}" />
+    <xacro:property name="wheelbase" value="0.2542" />
+    <xacro:property name="wheel_mount_point_y" value="0.31301" />
+
+    <!-- INCLUDE ROBOT PARTS DEFINITIONS -->
+    <xacro:include filename="$(find rover_description)/urdf/rover_a1/base.urdf.xacro" ns="body" />
+    <xacro:include filename="$(find rover_description)/urdf/common/gazebo.urdf.xacro" ns="gazebo" />
+    <xacro:include filename="$(find rover_description)/urdf/common/wheel.urdf.xacro" ns="wheel" />
+
+    <!-- BODY DECLARATION -->
+    <xacro:body.body
+      wheel_radius="${wheel_config['wheel_radius']}" />
+
+    <!-- WHEEL DECLARATION -->
+    <xacro:wheel.wheel
+      config="${wheel_config}"
+      mount_point_x="${wheelbase}"
+      mount_point_y="${wheel_mount_point_y}"
+      prefix="fl" />
+
+    <xacro:wheel.wheel
+      config="${wheel_config}"
+      mount_point_x="${wheelbase}"
+      mount_point_y="${wheel_mount_point_y}"
+      prefix="fr" />
+
+    <xacro:wheel.wheel
+      config="${wheel_config}"
+      mount_point_x="${wheelbase}"
+      mount_point_y="${wheel_mount_point_y}"
+      prefix="rl" />
+
+    <xacro:wheel.wheel
+      config="${wheel_config}"
+      mount_point_x="${wheelbase}"
+      mount_point_y="${wheel_mount_point_y}"
+      prefix="rr" />
+
+  </xacro:macro>
+
+</robot>
