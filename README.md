@@ -4,12 +4,20 @@ The package contains URDF files responsible for creating a representation of the
 
 ## Launch Files
 
-- `load_urdf.launch.py` - loads the robot's URDF and creates simple bindings to display moving joints.
+- `rover_load_urdf.launch.py` - loads the robot's URDF and creates simple bindings to display moving joints.
 
 ## Launch
 
 ```bash
-ros2 launch rover_description load_urdf.launch.py model:=urdf/rover_a1.urdf
+ros2 launch rover_description rover_load_urdf.launch.py
+```
+
+```bash
+ros2 launch rover_description rover_rviz.launch.py
+```
+
+```bash
+ ros2 run joint_state_publisher_gui joint_state_publisher_gui
 ```
 
 ## RViz: Rover
