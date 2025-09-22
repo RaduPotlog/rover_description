@@ -6,7 +6,7 @@ The package contains URDF files responsible for creating a representation of the
 
 - `rover_load_urdf.launch.py` - loads the robot's URDF and creates simple bindings to display moving joints.
 
-## Launch
+## Running
 
 ```bash
 ros2 launch rover_description rover_load_urdf.launch.py
