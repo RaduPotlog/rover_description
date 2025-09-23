@@ -8,7 +8,7 @@
         <parameters>${config_file}</parameters>
         <ros>
           <namespace>$(arg namespace)</namespace>
-          <remapping>drive_controller/cmd_vel_unstamped:=cmd_vel</remapping>
+          <remapping>drive_controller/cmd_vel:=cmd_vel</remapping>
           <remapping>drive_controller/odom:=odometry/wheels</remapping>
           <remapping>drive_controller/transition_event:=drive_controller/_transition_event</remapping>
           <remapping>joint_state_broadcaster/transition_event:=joint_state_broadcaster/_transition_event</remapping> 
