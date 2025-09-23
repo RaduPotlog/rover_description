@@ -10,7 +10,7 @@ The package contains URDF files responsible for creating a representation of the
 
 ## Launch Files
 
-- `rover_load_urdf.launch.py` - loads the robot's URDF and creates simple bindings to display moving joints.
+- `rover_load_urdf.launch.py` - Loads the robot's URDF and creates simple bindings to display moving joints.
 
 ## Running
 
