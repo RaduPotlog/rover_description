@@ -49,7 +49,7 @@ def generate_launch_description():
     use_sim = LaunchConfiguration("use_sim")
     declare_use_sim_arg = DeclareLaunchArgument(
         "use_sim",
-        default_value="True",
+        default_value="False",
         description="Whether simulation is used.",
         choices=["True", "true", "False", "false"],
     )
@@ -69,10 +69,10 @@ def generate_launch_description():
     )
 
     actions = [
-        SetParameter(name="use_sim_time", value=True),
         declare_namespace_arg,
         declare_rviz_config_arg,
         declare_use_sim_arg,
+        SetParameter(name="use_sim_time", value=use_sim),
         rviz_node,
     ]
 

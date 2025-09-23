@@ -5,25 +5,21 @@
     name="rover_a1_robot"
     params="wheel_config_file
             controller_config_file
-            use_sim:=true
+            use_sim:=false
             namespace:=''">
 
     <xacro:property name="ns" value='${namespace + "/" if namespace else ""}' />
-
     <xacro:property name="wheel_config" value="${xacro.load_yaml(wheel_config_file)}" />
     <xacro:property name="wheelbase" value="0.2542" />
     <xacro:property name="wheel_mount_point_y" value="0.31301" />
 
-    <!-- INCLUDE ROBOT PARTS DEFINITIONS -->
     <xacro:include filename="$(find rover_description)/urdf/rover_a1/base.urdf.xacro" ns="body" />
-    <xacro:include filename="$(find rover_description)/urdf/common/gazebo.urdf.xacro" ns="gazebo" />
     <xacro:include filename="$(find rover_description)/urdf/common/wheel.urdf.xacro" ns="wheel" />
-
-    <!-- BODY DECLARATION -->
+    <xacro:include filename="$(find rover_description)/urdf/common/gazebo.urdf.xacro" ns="gazebo" />
+    
     <xacro:body.body
       wheel_radius="${wheel_config['wheel_radius']}" />
 
-    <!-- WHEEL DECLARATION -->
     <xacro:wheel.wheel
       config="${wheel_config}"
       mount_point_x="${wheelbase}"
@@ -48,6 +44,46 @@
       mount_point_y="${wheel_mount_point_y}"
       prefix="rr" />
 
+
+    <!-- ROS2 Controller -->
+    <ros2_control name="${ns}rover_system" type="system">
+      
+      <!-- Gazebo simulation system contorller -->
+      <hardware>
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+      </hardware>
+
+      <joint name="fl_wheel_base_to_fl_wheel_joint">
+        <command_interface name="velocity" />
+        <state_interface name="position" />
+        <state_interface name="velocity" />
+        <state_interface name="effort" />
+      </joint>
+      <joint name="fr_wheel_base_to_fr_wheel_joint">
+        <command_interface name="velocity" />
+        <state_interface name="position" />
+        <state_interface name="velocity" />
+        <state_interface name="effort" />
+      </joint>
+      <joint name="rl_wheel_base_to_rl_wheel_joint">
+        <command_interface name="velocity" />
+        <state_interface name="position" />
+        <state_interface name="velocity" />
+        <state_interface name="effort" />
+      </joint>
+      <joint name="rr_wheel_base_to_rr_wheel_joint">
+        <command_interface name="velocity" />
+        <state_interface name="position" />
+        <state_interface name="velocity" />
+        <state_interface name="effort" />
+      </joint>
+    </ros2_control>
+
+    <!-- Load gazebo controller configuration -->
+    <xacro:if value="${use_sim}">
+      <xacro:gazebo.controller config_file="${controller_config_file}" namespace="${namespace}" />
+    </xacro:if>
+    
   </xacro:macro>
 
 </robot>

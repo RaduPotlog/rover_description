@@ -99,7 +99,7 @@ def generate_launch_description():
     use_sim = LaunchConfiguration("use_sim")
     declare_use_sim_arg = DeclareLaunchArgument(
         "use_sim",
-        default_value="True",
+        default_value="False",
         description="Whether simulation is used.",
         choices=["True", "true", "False", "false"],
     )
@@ -124,9 +124,7 @@ def generate_launch_description():
         "wheel_type",
         default_value=PythonExpression([f"{default_wheel_type}['", robot_model, "']"]),
         description=(
-            "Specify the wheel type. If the selected wheel type is not 'custom', "
-            "the 'wheel_config_path' and 'controller_config_path' arguments will be "
-            "automatically adjusted and can be omitted."
+            "Specify the wheel type."
         ),
         choices=["wheel_01", "custom"],
     )
@@ -169,7 +167,6 @@ def generate_launch_description():
     )
 
     actions = [
-        SetParameter(name="use_sim_time", value=True),
         declare_common_dir_path_arg,
         declare_components_config_path_arg,
         declare_robot_model_arg,
@@ -178,6 +175,7 @@ def generate_launch_description():
         declare_namespace_arg,
         declare_use_sim_arg,
         declare_wheel_config_path_arg,
+        SetParameter(name="use_sim_time", value=use_sim),
         robot_state_pub_node,
     ]
 
