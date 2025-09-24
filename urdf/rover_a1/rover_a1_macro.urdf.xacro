@@ -15,7 +15,6 @@
 
     <xacro:include filename="$(find rover_description)/urdf/rover_a1/base.urdf.xacro" ns="body" />
     <xacro:include filename="$(find rover_description)/urdf/common/wheel.urdf.xacro" ns="wheel" />
-    <xacro:include filename="$(find rover_description)/urdf/common/gazebo.urdf.xacro" ns="gazebo" />
     
     <xacro:body.body
       wheel_radius="${wheel_config['wheel_radius']}" />
@@ -44,15 +43,8 @@
       mount_point_y="${wheel_mount_point_y}"
       prefix="rr" />
 
-
     <!-- ROS2 Controller -->
     <ros2_control name="${ns}rover_system" type="system">
-      
-      <!-- Gazebo simulation system contorller -->
-      <hardware>
-        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-      </hardware>
-
       <joint name="fl_wheel_base_to_fl_wheel_joint">
         <command_interface name="velocity" />
         <state_interface name="position" />
@@ -77,13 +69,35 @@
         <state_interface name="velocity" />
         <state_interface name="effort" />
       </joint>
+
+      <hardware>
+        <xacro:if value="${use_sim}">
+          <!-- Gazebo simulation system contorller -->
+          <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        </xacro:if>
+
+        <xacro:unless value="${use_sim}">
+          <!-- Hardware interface system controller -->
+          <plugin>husarion_ugv_hardware_interfaces/RoverA1System</plugin>
+        </xacro:unless>
+      </hardware>
     </ros2_control>
 
-    <!-- Load gazebo controller configuration -->
     <xacro:if value="${use_sim}">
-      <xacro:gazebo.controller config_file="${controller_config_file}" namespace="${namespace}" />
+      <!-- Gazebo simulation system contorller plugin -->
+      <gazebo>
+        <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>${controller_config_file}</parameters>
+          <ros>
+            <namespace>$(arg namespace)</namespace>
+            <remapping>drive_controller/cmd_vel:=cmd_vel</remapping>
+            <remapping>drive_controller/odom:=odometry/wheels</remapping>
+            <remapping>drive_controller/transition_event:=drive_controller/_transition_event</remapping>
+            <remapping>joint_state_broadcaster/transition_event:=joint_state_broadcaster/_transition_event</remapping> 
+          </ros>
+        </plugin>
+      </gazebo>
     </xacro:if>
-    
   </xacro:macro>
 
 </robot>
