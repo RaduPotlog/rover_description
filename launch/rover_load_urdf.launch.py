@@ -93,7 +93,7 @@ def generate_launch_description():
         "robot_model",
         default_value=EnvironmentVariable(name="ROBOT_MODEL_NAME", default_value="rover_a1"),
         description="Specify robot model",
-        choices=["rover_a1", "rover_a2"],
+        choices=["rover_a1"],
     )
 
     use_sim = LaunchConfiguration("use_sim")
@@ -119,7 +119,7 @@ def generate_launch_description():
         ),
     )
 
-    default_wheel_type = {"rover_a1": "wheel_01", "rover_a2": "wheel_01"}
+    default_wheel_type = {"rover_a1": "wheel_01"}
     declare_wheel_type_arg = DeclareLaunchArgument(
         "wheel_type",
         default_value=PythonExpression([f"{default_wheel_type}['", robot_model, "']"]),
@@ -131,6 +131,13 @@ def generate_launch_description():
 
     ns = PythonExpression(["'", namespace, "' + '/' if '", namespace, "' else ''"])
     ns_controller_config_path = ReplaceString(controller_config_path, {"<namespace>/": ns})
+
+    imu_pos_x = os.environ.get("ROBOT_IMU_LOCALIZATION_X", "0.168")
+    imu_pos_y = os.environ.get("ROBOT_IMU_LOCALIZATION_Y", "0.028")
+    imu_pos_z = os.environ.get("ROBOT_IMU_LOCALIZATION_Z", "0.083")
+    imu_rot_r = os.environ.get("ROBOT_IMU_ORIENTATION_R", "3.14")
+    imu_rot_p = os.environ.get("ROBOT_IMU_ORIENTATION_P", "-1.57")
+    imu_rot_y = os.environ.get("ROBOT_IMU_ORIENTATION_Y", "0.0")
 
     urdf_file = PythonExpression(["'", robot_model, ".urdf.xacro'"])
     robot_description_content = Command(
@@ -147,6 +154,10 @@ def generate_launch_description():
             " controller_config_file:=",
             ns_controller_config_path,
             " namespace:=",
+            " imu_xyz:=",
+            f"'{imu_pos_x} {imu_pos_y} {imu_pos_z}'",
+            " imu_rpy:=",
+            f"'{imu_rot_r} {imu_rot_p} {imu_rot_y}'",
             namespace,
             " components_config_path:=",
             components_config_path,

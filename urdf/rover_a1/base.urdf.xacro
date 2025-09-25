@@ -3,7 +3,9 @@
 
   <xacro:macro
     name="body"
-    params="wheel_radius">
+    params="wheel_radius 
+            imu_xyz 
+            imu_rpy">
 
     <link name="base_link" />
 
@@ -27,6 +29,14 @@
                  iyy="0.228604041647293" iyz="3.84951327810773E-08" izz="0.363260170153768" />
       </inertial>
     </link>
+
+    <joint name="body_to_imu_joint" type="fixed">
+      <origin xyz="${imu_xyz}" rpy="${imu_rpy}" />
+      <parent link="body_link" />
+      <child link="imu_link" />
+    </joint>
+
+    <link name="imu_link" />
 
     <joint name="body_to_footprint_joint" type="fixed">
       <origin xyz="0.0 0.0 -0.1359" rpy="0.0 0.0 0.0" />

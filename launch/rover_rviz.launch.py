@@ -41,7 +41,7 @@ def generate_launch_description():
     declare_rviz_config_arg = DeclareLaunchArgument(
         "rviz_config",
         default_value=PathJoinSubstitution(
-            [FindPackageShare("rover_description"), "rviz", "rover.rviz"]
+            [FindPackageShare("rover_description"), "rviz", "rover_imu.rviz"]
         ),
         description="RViz configuration file.",
     )
