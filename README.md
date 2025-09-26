@@ -26,7 +26,9 @@ ros2 launch rover_description rover_rviz.launch.py
  ros2 run joint_state_publisher_gui joint_state_publisher_gui
 ```
 
-## RViz: Rover
-
+## RViz
 
 ![Robot Model](images/rover_rviz.png)
+
+## Gazebo
+-
