@@ -91,9 +91,11 @@
         <state_interface name="effort" />
       </joint>
       
-      <!-- IMU interfaces -->
-      <xacro:imu.imu_interface use_sim="${use_sim}" namespace="${namespace}" />
-
+      <xacro:if value="${use_sim}">
+        <!-- IMU interfaces -->
+        <xacro:imu.imu_interface use_sim="${use_sim}" namespace="${namespace}" />
+      </xacro:if>
+      
       <!-- Hardware controller plugin -->
       <hardware>
         <xacro:if value="${use_sim}">

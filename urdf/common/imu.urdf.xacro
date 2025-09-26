@@ -114,6 +114,10 @@
           <param name="remove_gravity_vector">false</param>
           <param name="world_frame">enu</param>
         </hardware>
+      
+        <!-- IMU interfaces -->
+        <xacro:imu_interface use_sim="${use_sim}" namespace="${namespace}" />
+      
       </xacro:unless>
     </ros2_control> 
   </xacro:macro>
