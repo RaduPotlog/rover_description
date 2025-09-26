@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
+  
+  <xacro:macro 
+    name="imu_interface"
+    params="use_sim:=false
+            namespace:=''">
+
+    <xacro:property name="ns" value='${namespace + "/" if namespace else ""}' />
+    
+    <sensor name="${ns}imu">
+      <state_interface name="orientation.x" />
+      <state_interface name="orientation.y" />
+      <state_interface name="orientation.z" />
+      <state_interface name="orientation.w" />
+      <state_interface name="angular_velocity.x" />
+      <state_interface name="angular_velocity.y" />
+      <state_interface name="angular_velocity.z" />
+      <state_interface name="linear_acceleration.x" />
+      <state_interface name="linear_acceleration.y" />
+      <state_interface name="linear_acceleration.z" />
+    </sensor>    
+  </xacro:macro>
 
   <!-- Gauss noise macro -->
   <xacro:macro 
@@ -27,7 +48,8 @@
             namespace:=''">
 
     <xacro:property name="ns" value='${namespace + "/" if namespace else ""}' />
-  
+    
+    <!-- Gazebo IMU -->
     <xacro:if value="${use_sim}">
       <gazebo reference="${reference_frame}">
         <sensor name="${ns}imu" type="imu">
@@ -70,8 +92,9 @@
       </gazebo>
     </xacro:if>
 
-    <xacro:unless value="${use_sim}">
-      <ros2_control name="${ns}imu" type="sensor">
+    <!-- ROS2 controller -->
+    <ros2_control name="${ns}imu" type="sensor">
+      <xacro:unless value="${use_sim}">
         <hardware>
           <!-- Hardware IMU sensor interface  -->
           <plugin>rover_hardware_interface/PhidgetImuSensor</plugin>
@@ -91,22 +114,8 @@
           <param name="remove_gravity_vector">false</param>
           <param name="world_frame">enu</param>
         </hardware>
-
-        <sensor name="${ns}imu">
-          <state_interface name="orientation.x" />
-          <state_interface name="orientation.y" />
-          <state_interface name="orientation.z" />
-          <state_interface name="orientation.w" />
-          <state_interface name="angular_velocity.x" />
-          <state_interface name="angular_velocity.y" />
-          <state_interface name="angular_velocity.z" />
-          <state_interface name="linear_acceleration.x" />
-          <state_interface name="linear_acceleration.y" />
-          <state_interface name="linear_acceleration.z" />
-        </sensor>
-      </ros2_control>
-    </xacro:unless>
-
+      </xacro:unless>
+    </ros2_control> 
   </xacro:macro>
 
 </robot>
