@@ -106,6 +106,20 @@
         <xacro:unless value="${use_sim}">
           <!-- Hardware controller system interface -->
           <plugin>rover_hardware_interface/RoverA1System</plugin>
+
+          <!-- Driver controller update frequency and maximum attempts to initilize and activate -->
+          <param name="driver_states_update_frequency">20.0</param>
+          <param name="max_rover_driver_initialization_attempts">3.0</param>
+          <param name="max_rover_driver_activation_attempts">3.0</param>
+          
+          <!-- Motor parameters -->
+          <param name="motor_torque_constant">0.11</param>
+          <param name="max_rpm_motor_speed">2400</param>
+          <param name="gear_ratio">19.16</param>
+          <param name="gearbox_efficiency">0.70</param>
+          <!-- Encoder parameters -->
+          <param name="encoder_resolution">4000</param>
+
         </xacro:unless>
       </hardware>
     </ros2_control>
