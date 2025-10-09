@@ -5,7 +5,9 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /Imu1
+        - /Map1
+        - /Robot1
+        - /Robot1/Odometry1/Topic1
         - /Imu1/Axes properties1
         - /Imu1/Acceleration properties1
       Splitter Ratio: 0.5
@@ -157,6 +159,8 @@ Visualization Manager:
               Value: false
             imu_link:
               Value: true
+            odom:
+              Value: true
             rl_wheel_base_link:
               Value: false
             rl_wheel_link:
@@ -189,6 +193,8 @@ Visualization Manager:
                 rr_wheel_base_link:
                   rr_wheel_link:
                     {}
+            odom:
+              {}
           Update Interval: 0
           Value: true
         - Angle Tolerance: 0.10000000149011612
@@ -228,7 +234,7 @@ Visualization Manager:
             Filter size: 10
             History Policy: Keep Last
             Reliability Policy: Reliable
-            Value: odometry/filtered
+            Value: /odometry/wheels
           Value: false
       Enabled: true
       Name: Robot
@@ -249,7 +255,7 @@ Visualization Manager:
         y_scale: 1
         z_scale: 1
       Class: rviz_imu_plugin/Imu
-      Enabled: true
+      Enabled: false
       Name: Imu
       Topic:
         Depth: 5
@@ -258,12 +264,12 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /imu/data
-      Value: true
+      Value: false
       fixed_frame_orientation: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: base_link
+    Fixed Frame: odom
     Frame Rate: 30
   Name: root
   Tools:
@@ -306,7 +312,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 5.996953964233398
+      Distance: 4.22788667678833
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -321,10 +327,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.8147962689399719
+      Pitch: 0.779796302318573
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.8250017166137695
+      Yaw: 5.398187637329102
     Saved: ~
 Window Geometry:
   Displays:
@@ -342,5 +348,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1180
-  X: 70
-  Y: 110
+  X: -1
+  Y: 68
