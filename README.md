@@ -1,16 +1,16 @@
 # rover_description
 
-The package contains URDF files responsible for creating a representation of the robot.
+Package containing URDF files responsible for creating a representation of the Rover.
 
 ## Config Files
 
-- `wheel_01.yaml` - Rover 4WD (33 inch) wheel configuration.
+- `wheel_01.yaml` - Rover 4WD (33 inch) wheel's configuration.
 
-- `components.yaml` - Rover additional components configuration.
+- `components.yaml` - Rover additional components's configuration.
 
 ## Launch Files
 
-- `rover_load_urdf.launch.py` - Loads the robot's URDF and creates simple bindings to display moving joints.
+- `rover_load_urdf.launch.py` - Loads the Rover's URDF and creates simple bindings to display moving joints.
 
 ## Running
 
